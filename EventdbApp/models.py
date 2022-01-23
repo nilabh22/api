@@ -1,3 +1,4 @@
+from distutils.command import upload
 from django.db import models
 
 # Create your models here.
@@ -35,23 +36,38 @@ class Rules(models.Model):
         return self.primary_title
     
 
+class Speaker(models.Model):
+    name = models.CharField(max_length=200)
+    designation = models.CharField(max_length=50)
+    organization = models.CharField(max_length=199)
+    education = models.CharField(max_length=299)
+    description = models.CharField(max_length=999)
+
+    def __str__(self):
+        return f'{self.name} - {self.organization}'
+    
+
+
 class Events(models.Model):
     id = models.AutoField(primary_key= True)
-    main_title = models.CharField(max_length=200)
-    secondary_title = models.CharField(max_length=200)
+    main_title = models.CharField(max_length=200, blank=True, null= True)
+    secondary_title = models.CharField(max_length=200, blank=True, null = True)
     date = models.DateTimeField()
     slug = models.SlugField(unique=True)
     description = models.TextField()
+    eventEnded = models.CharField(max_length=5, default="False")
+    eventRegistrationLink = models.CharField(max_length = 99, blank=True, null=True)
     image1 = models.FileField(upload_to = 'images')
-    image2 = models.FileField(upload_to = 'images')
-    image3 = models.FileField(upload_to = 'images')
-    image4 = models.FileField(upload_to = 'images')
-    image5 = models.FileField(upload_to = 'images')
-    image6 = models.FileField(upload_to = 'images')
-    venue = models.ForeignKey(Location ,on_delete = models.CASCADE)
+    image2 = models.FileField(upload_to = 'images',blank = True, null=True)
+    image3 = models.FileField(upload_to = 'images',blank = True, null=True)
+    image4 = models.FileField(upload_to = 'images',blank = True, null=True)
+    image5 = models.FileField(upload_to = 'images',blank = True, null=True)
+    image6 = models.FileField(upload_to = 'images',blank = True, null=True)
+    venue = models.ForeignKey(Location ,on_delete = models.CASCADE, blank= True, null =True)
     winners = models.ManyToManyField(Winner, blank= True)
     rules = models.ForeignKey(Rules,on_delete = models.CASCADE)
-    prizes = models.ForeignKey(Prize, on_delete=models.CASCADE)
+    prizes = models.ForeignKey(Prize, on_delete=models.CASCADE, null = True, blank=True)
+    speaker =models.ForeignKey(Speaker, on_delete=models.CASCADE, null =True, blank = True)
 
     def __str__(self):
         return f'{self.main_title} - {self.date} - {self.venue}'

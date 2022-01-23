@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Winner, Prize, Location, Rules, Events
+from .models import Winner, Prize, Location, Rules, Events, Speaker
 
 class EventsAdmin(admin.ModelAdmin):
     list_display = ('main_title', 'date', 'venue')
@@ -12,6 +12,7 @@ admin.site.register(Events, EventsAdmin)
 admin.site.register(Winner)
 admin.site.register(Prize)
 admin.site.register(Location)
+admin.site.register(Speaker)
 admin.site.register(Rules)
 
 
