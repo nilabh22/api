@@ -45,8 +45,19 @@ class Speaker(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.organization}'
-    
 
+class Image(models.Model):
+    main_title =models.CharField(max_length=200, blank =True, null=True)
+    image1 = models.FileField(upload_to = 'images',blank = True, null=True)
+    image2 = models.FileField(upload_to = 'images',blank = True, null=True)
+    image3 = models.FileField(upload_to = 'images',blank = True, null=True)
+    image4 = models.FileField(upload_to = 'images',blank = True, null=True)
+    image5 = models.FileField(upload_to = 'images',blank = True, null=True)
+    image6 = models.FileField(upload_to = 'images',blank = True, null=True)
+    
+    def __str__(self):
+        return self.main_title
+    
 
 class Events(models.Model):
     id = models.AutoField(primary_key= True)
@@ -57,12 +68,7 @@ class Events(models.Model):
     description = models.TextField()
     eventEnded = models.CharField(max_length=5, default="False")
     eventRegistrationLink = models.CharField(max_length = 99, blank=True, null=True)
-    image1 = models.FileField(upload_to = 'images')
-    image2 = models.FileField(upload_to = 'images',blank = True, null=True)
-    image3 = models.FileField(upload_to = 'images',blank = True, null=True)
-    image4 = models.FileField(upload_to = 'images',blank = True, null=True)
-    image5 = models.FileField(upload_to = 'images',blank = True, null=True)
-    image6 = models.FileField(upload_to = 'images',blank = True, null=True)
+    eventGallery = models.ForeignKey(Image,on_delete=models.CASCADE,blank=True, null=True)
     venue = models.ForeignKey(Location ,on_delete = models.CASCADE, blank= True, null =True)
     winners = models.ManyToManyField(Winner, blank= True)
     rules = models.ForeignKey(Rules,on_delete = models.CASCADE)
